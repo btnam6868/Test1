@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roles</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Dashboard</h1>
+            <ul class="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="users.html">Users</a></li>
+                <li><a href="roles.html">Roles</a></li>
+                <li><a href="permissions.html">Permissions</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <header>
+                <h1>Roles</h1>
+            </header>
+            <main>
+                <section class="role-list">
+                    <h2>Role List</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Admin</td>
+                                <td>Administrator</td>
+                                <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Manager</td>
+                                <td>Manager</td>
+                                <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button>Add New Role</button>
+                </section>
+            </main>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

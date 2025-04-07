@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Dashboard</h1>
+            <ul class="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="users.html">Users</a></li>
+                <li><a href="roles.html">Roles</a></li>
+                <li><a href="permissions.html">Permissions</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <header>
+                <h1>Users</h1>
+            </header>
+            <main>
+                <section class="user-list">
+                    <div class="user-list-header">
+                        <h2>User List</h2>
+                        <input type="text" id="search-input" placeholder="Search users...">
+                        <button id="add-user-btn">Add New User</button>
+                    </div>
+                    <table id="user-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>johndoe</td>
+                                <td>johndoe@example.com</td>
+                                <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>janedoe</td>
+                                <td>janedoe@example.com</td>
+                                <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Add User Modal (Hidden by default) -->
+                <div id="add-user-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button">&times;</span>
+                        <h2>Add New User</h2>
+                        <form id="add-user-form">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" name="username"><br><br>
+
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email"><br><br>
+
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password"><br><br>
+
+                            <button type="submit">Create User</button>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>
+        // Placeholder function to fetch users from the API
+        async function fetchUsers() {
+            // In a real application, this would make an API call to the backend
+            // Example:
+            // const response = await axios.get('/api/users');
+            // const users = response.data;
+
+            // For now, use some dummy data
+            const users = [
+                { id: 1, username: "johndoe", email: "johndoe@example.com", first_name: "John", last_name: "Doe" },
+                { id: 2, username: "janedoe", email: "janedoe@example.com", first_name: "Jane", last_name: "Doe" }
+            ];
+
+            displayUsers(users);
+        }
+
+        // Function to display the users in the table
+        function displayUsers(users) {
+            const userTableBody = document.querySelector('#user-table tbody');
+            userTableBody.innerHTML = ""; // Clear existing table rows
+
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${user.first_name || ''} ${user.last_name || ''}</td>
+                    <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                `;
+                userTableBody.appendChild(row);
+            });
+        }
+
+        // Call fetchUsers when the page loads
+        window.addEventListener('load', fetchUsers);
+
+        // --- Existing Modal and Search Functionality (from previous steps) ---
+        console.log("Dashboard script loaded");
+
+        // Get the search input and table
+        const searchInput = document.getElementById('search-input');
+        const userTable = document.getElementById('user-table');
+
+        // Add event listener to the search input
+        searchInput.addEventListener('keyup', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const tableRows = userTable.getElementsByTagName('tr');
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (let i = 1; i < tableRows.length; i++) { // Start from 1 to skip the header row
+                const rowData = tableRows[i].textContent.toLowerCase();
+                if (rowData.includes(searchTerm)) {
+                    tableRows[i].style.display = "";
+                } else {
+                    tableRows[i].style.display = "none";
+                }
+            }
+        });
+
+        // Get the modal and button elements
+        const modal = document.getElementById('add-user-modal');
+        const addUserBtn = document.getElementById('add-user-btn');
+        const closeButton = document.querySelector('.close-button');
+
+        // Open the modal when the button is clicked
+        addUserBtn.addEventListener('click', function() {
+            modal.style.display = "block";
+        });
+
+        // Close the modal when the close button is clicked
+        closeButton.addEventListener('click', function() {
+            modal.style.display = "none";
+        });
+
+        // Close the modal when the user clicks outside of it
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        // Handle form submission (This is just a placeholder - it won't actually save data)
+        const addUserForm = document.getElementById('add-user-form');
+        addUserForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get the values from the input fields
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Here you would normally send the data to the server
+            console.log("Creating user:", username, email, password);
+
+            // For now, just close the modal
+            modal.style.display = "none";
+            addUserForm.reset();
+        });
+    </script>
+</body>
+</html>
